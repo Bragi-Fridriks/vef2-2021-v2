@@ -1,0 +1,50 @@
+<%- include('header') %> 
+
+<h1>Undirskriftarlisti</h1>
+
+<form method="post" actions="/">
+    <div class="field<%= locals.isInvalid('name', errors) ? 'field--invalid' : '' %>">
+        <label for="name">Nafn</label>
+        <input type="text" name="name" id="name" value="<%= name %>">
+    </div>
+    <div class="field<%= locals.isInvalid('nationalId', errors) ?  ' field--invalid' : '' %>">
+        <label for="nationalId">Kennitala</label>
+        <input type="text" name="nationalId" id="nationalId" value="<%= nationalId %>" class="">
+    </div>
+    <div class="field<%= locals.isInvalid('comment', errors) ?  ' field--invalid' : '' %>">
+        <label for="comment">Athugasemd:</label>
+        <input type="text" name="comment" id="comment" value="<%= comment %>" class="">
+    </div>
+
+    <% if (errors.length > 0 ) { %>
+        <h2>Villur við undirskrift:</h2>
+        <ul class="errors">
+            <% errors.forEach((error) => ) { %>
+                <li class="error"><label for="<%= error.param %>"><%= error.msg %></label></li>
+            <% }); %>
+        </ul>
+    <% } %>
+
+    <button>Skrifa undir</button>
+</form>
+
+<div class="signatures">
+    <% if (list.length === 0) { %>
+        <p>Engar undirskriftir.</p>
+    <% } %>
+</div>
+
+<div class="signature">
+    <h2>Dags</h2>
+    <h2>Nafn</h2>
+    <h2>Athugasemd</h2>
+</div>
+<% list.forEach((signature) => { %>
+    <div class="signature">
+        <p><%= signature.signed.toISOString() %></p>
+        <p><%= signature.name %></p>
+        <p><%= signature.comment %> </p>
+    </div>
+<% }); %>
+
+<%- include('footer') -%>
